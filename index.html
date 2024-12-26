@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CryptoWealth | Эксклюзивное сообщество криптотрейдеров</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" type="images/x-icon"
+    href="https://cdn.icon-icons.com/icons2/1384/PNG/512/btc-crypto-cryptocurrency-cryptocurrencies-cash-money-bank-payment_95084.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        :root {
+            --primary: #00ffaa;
+            --secondary: #2b6aff;
+            --accent: #ff3399;
+            --dark: #040714;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --gradient: linear-gradient(45deg, var(--primary), var(--secondary));
+            --glow: 0 0 20px rgba(0, 255, 170, 0.3);
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        body {
+            background-color: var(--dark);
+            color: white;
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 20% 20%, rgba(43, 106, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(0, 255, 170, 0.1) 0%, transparent 50%);
+            background-attachment: fixed;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem;
+            background: rgba(4, 7, 20, 0.8);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            transition: 0.3s;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .navbar.scrolled {
+            padding: 1rem 1.5rem;
+            background: rgba(4, 7, 20, 0.95);
+            border-bottom: 1px solid rgba(0, 255, 170, 0.1);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, var(--primary), var(--secondary), var(--accent));
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient 5s ease infinite;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: 0.3s;
+            font-weight: 500;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: var(--gradient);
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding: 8rem 0;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: 
+                radial-gradient(circle at center, rgba(0, 255, 170, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at center, rgba(43, 106, 255, 0.1) 0%, transparent 50%);
+            animation: rotate 30s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            font-size: 4.5rem;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, var(--primary), var(--secondary), var(--accent));
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient 5s ease infinite;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.2s backwards;
+            text-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .crypto-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2rem;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            animation: fadeInUp 1s ease 0.4s backwards;
+            transition: 0.3s;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .crypto-card:hover {
+            transform: translateY(-10px) rotateX(5deg) rotateY(5deg);
+            border-color: var(--primary);
+            box-shadow: var(--glow);
+        }
+
+        .crypto-price-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: 0.3s;
+        }
+
+        .crypto-price-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateX(10px);
+        }
+
+        .crypto-price-item:last-child {
+            border-bottom: none;
+        }
+
+        .crypto-icon {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .price-up {
+            color: var(--primary);
+            text-shadow: 0 0 10px rgba(0, 255, 170, 0.5);
+        }
+
+        .price-down {
+            color: var(--accent);
+            text-shadow: 0 0 10px rgba(255, 51, 153, 0.5);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1.2rem 2.5rem;
+            background: var(--gradient);
+            color: var(--dark);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 
+                0 10px 20px rgba(0, 255, 170, 0.2),
+                0 6px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .features {
+            padding: 10rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .features::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background: radial-gradient(circle at center, rgba(43, 106, 255, 0.1) 0%, transparent 50%);
+            animation: rotate 30s linear infinite reverse;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3.5rem;
+            margin-bottom: 4rem;
+            background: linear-gradient(45deg, var(--primary), var(--secondary), var(--accent));
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient 5s ease infinite;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 20px;
+            transition: 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            opacity: 0;
+            transform: translateY(20px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.03), transparent);
+            transform: translateX(-100%);
+            transition: 0.5s;
+        }
+
+        .feature-card:hover::before {
+            transform: translateX(100%);
+        }
+
+        .feature-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: var(--primary);
+            box-shadow: var(--glow);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .advantages {
+            padding: 10rem 0;
+            background: linear-gradient(45deg, rgba(0, 255, 170, 0.05), rgba(43, 106, 255, 0.05));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .advantages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .advantage-card {
+            text-align: center;
+            padding: 2rem;
+            background: var(--card-bg);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: 0.3s;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .advantage-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .advantage-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: var(--glow);
+        }
+
+        .advantage-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            text-shadow: var(--glow);
+        }
+
+        .testimonials {
+            padding: 10rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .testimonials::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background: radial-gradient(circle at center, rgba(255, 51, 153, 0.05) 0%, transparent 50%);
+            animation: rotate 30s linear infinite;
+        }
+
+        .testimonials-slider {
+            display: flex;
+            gap: 2rem;
+            padding: 2rem 0;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none;
+        }
+
+        .testimonials-slider::-webkit-scrollbar {
+            display: none;
+        }
+
+        .testimonial-card {
+            min-width: 350px;
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            scroll-snap-align: start;
+            transition: 0.3s;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: var(--glow);
+        }
+
+        .testimonial-content {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .author-info h4 {
+            color: var(--primary);
+            margin-bottom: 0.2rem;
+        }
+
+        .author-info p {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .cta {
+            padding: 10rem 0;
+            text-align: center;
+            background: linear-gradient(45deg, rgba(0, 255, 170, 0.1), rgba(43, 106, 255, 0.1));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+            animation: rotate 30s linear infinite;
+        }
+
+        .floating-crypto {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.2;
+            animation: float 6s infinite;
+            color: var(--primary);
+            text-shadow: var(--glow);
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+            100% { transform: translateY(0) rotate(0deg); }
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--primary);
+            border-radius: 50%;
+            box-shadow: var(--glow);
+        }
+
+        @media (max-width: 968px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            h1 {
+                font-size: 3rem;
+            }
+
+            .crypto-card {
+                margin-top: 2rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .testimonial-card {
+                min-width: 300px;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+    
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <div class="logo">CryptoWealth</div>
+                <div class="nav-links">
+                    <a href="#features">Возможности</a>
+                    <a href="#advantages">Преимущества</a>
+                    <a href="#testimonials">Отзывы</a>
+                    <a href="#cta">Начать</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <h1>Ваш путь к финансовой свободе</h1>
+                    <p class="hero-subtitle">Присоединяйтесь к элитному сообществу криптотрейдеров и получайте эксклюзивные сигналы с точностью 97%</p>
+                    <a href="https://t.me/+dDi5vEALFbQwMmMy" class="btn">
+                        <i class="fab fa-telegram"></i>
+                        Получить доступ сейчас
+                    </a>
+                </div>
+                <div class="crypto-card">
+                    <div class="crypto-price-item">
+                        <div class="crypto-icon">
+                            <i class="fab fa-bitcoin"></i>
+                            <span>Bitcoin</span>
+                        </div>
+                        <span class="price-up">$48,235 (+2.5%)</span>
+                    </div>
+                    <div class="crypto-price-item">
+                        <div class="crypto-icon">
+                            <i class="fab fa-ethereum"></i>
+                            <span>Ethereum</span>
+                        </div>
+                        <span class="price-up">$2,890 (+3.2%)</span>
+                    </div>
+                    <div class="crypto-price-item">
+                        <div class="crypto-icon">
+                            <i class="fas fa-circle"></i>
+                            <span>Solana</span>
+                        </div>
+                        <span class="price-down">$98 (-1.2%)</span>
+                    </div>
+                    <div class="crypto-price-item">
+                        <div class="crypto-icon">
+                            <i class="fas fa-circle"></i>
+                            <span>Cardano</span>
+                        </div>
+                        <span class="price-up">$1.25 (+4.7%)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="section-title">Почему выбирают нас</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Профессиональный анализ</h3>
+                    <p>Получайте детальный технический анализ и прогнозы от экспертов с многолетним опытом на крипторынке</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3>AI-прогнозирование</h3>
+                    <p>Используйте силу искусственного интеллекта для анализа рынка и получения точных сигналов</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>Обучение трейдингу</h3>
+                    <p>Получите доступ к эксклюзивным обучающим материалам и станьте профессиональным трейдером</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h3>Закрытое сообщество</h3>
+                    <p>Станьте частью элитного сообщества успешных трейдеров и получайте поддержку 24/7</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="advantages" class="advantages">
+        <div class="container">
+            <h2 class="section-title">Наши достижения</h2>
+            <div class="advantages-grid">
+                <div class="advantage-card">
+                    <div class="advantage-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>15,000+</h3>
+                    <p>Активных участников</p>
+                </div>
+                <div class="advantage-card">
+                    <div class="advantage-icon">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                    <h3>97%</h3>
+                    <p>Точность сигналов</p>
+                </div>
+                <div class="advantage-card">
+                    <div class="advantage-icon">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <h3>$100к+</h3>
+                    <p>Общая прибыль</p>
+                </div>
+                <div class="advantage-card">
+                    <div class="advantage-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>24/7</h3>
+                    <p>Поддержка</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonials" class="testimonials">
+        <div class="container">
+            <h2 class="section-title">Отзывы участников</h2>
+            <div class="testimonials-slider">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        "Благодаря сигналам и аналитике от команды CryptoWealth мой портфель вырос на 300% за последние 3 месяца. Это лучшее сообщество, которое я встречал!"
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">АК</div>
+                        <div class="author-info">
+                            <h4>Александр К.</h4>
+                            <p>Трейдер, 2 года опыта</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        "Профессиональный подход и качественная аналитика. За первый месяц удалось увеличить депозит в 2.5 раза. Очень доволен результатами!"
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">МС</div>
+                        <div class="author-info">
+                            <h4>Максим С.</h4>
+                            <p>Инвестор, 1 год опыта</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        "Лучшее обучение криптотрейдингу, которое я встречала. Отдельное спасибо за поддержку на всех этапах и качественные сигналы!"
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">ЕВ</div>
+                        <div class="author-info">
+                            <h4>Елена В.</h4>
+                            <p>Начинающий трейдер</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="cta" class="cta">
+        <div class="container">
+            <h2 class="section-title">Готовы начать зарабатывать?</h2>
+            <p class="hero-subtitle">Присоединяйтесь к нам сейчас и получите бонус - план быстрого старта в криптотрейдинге</p>
+            <a href="https://t.me/+dDi5vEALFbQwMmMy" class="btn">
+                <i class="fab fa-telegram"></i>
+                Присоединиться к сообществу
+            </a>
+        </div>
+        <i class="fab fa-bitcoin floating-crypto" style="top: 20%; left: 20%"></i>
+        <i class="fab fa-ethereum floating-crypto" style="top: 60%; right: 20%"></i>
+        <i class="fas fa-circle floating-crypto" style="top: 40%; left: 80%"></i>
+    </section>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Animate elements on scroll
+        const observerElements = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.feature-card, .advantage-card').forEach(el => {
+            observerElements.observe(el);
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Update crypto prices with animation
+        function updateCryptoPrices() {
+            const prices = document.querySelectorAll('.crypto-price-item span:last-child');
+            prices.forEach(price => {
+                const currentPrice = parseFloat(price.textContent.match(/\d+/)[0]);
+                const change = (Math.random() * 6) - 3;
+                const newPrice = currentPrice * (1 + change/100);
+                
+                price.style.transition = 'color 0.3s';
+                price.textContent = `$${newPrice.toFixed(2)} (${change >= 0 ? '+' : ''}${change.toFixed(1)}%)`;
+                price.className = change >= 0 ? 'price-up' : 'price-down';
+            });
+        }
+
+        setInterval(updateCryptoPrices, 3000);
+
+        // Particle effect
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            
+            const size = Math.random() * 3;
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            
+            const startX = Math.random() * window.innerWidth;
+            const startY = window.innerHeight;
+            
+            particle.style.left = `${startX}px`;
+            particle.style.top = `${startY}px`;
+            
+            const animation = particle.animate([
+                {
+                    transform: `translate(0, 0)`,
+                    opacity: 1
+                },
+                {
+                    transform: `translate(${(Math.random() - 0.5) * 200}px, -${window.innerHeight}px)`,
+                    opacity: 0
+                }
+            ], {
+                duration: Math.random() * 3000 + 2000,
+                easing: 'linear'
+            });
+            
+            document.getElementById('particles').appendChild(particle);
+            
+            animation.onfinish = () => {
+                particle.remove();
+            };
+        }
+
+        // Create particles periodically
+        setInterval(createParticle, 100);
+
+        // Random floating crypto icons
+        function createFloatingIcon() {
+            const icons = ['fa-bitcoin', 'fa-ethereum', 'fa-circle'];
+            const icon = document.createElement('i');
+            icon.className = `fab ${icons[Math.floor(Math.random() * icons.length)]} floating-crypto`;
+            icon.style.left = `${Math.random() * 100}%`;
+            icon.style.top = `${Math.random() * 100}%`;
+            icon.style.animationDelay = `${Math.random() * 5}s`;
+            document.querySelector('.cta').appendChild(icon);
+            
+            setTimeout(() => {
+                icon.remove();
+            }, 6000);
+        }
+
+        setInterval(createFloatingIcon, 2000);
+
+        // Testimonials slider touch support
+        const slider = document.querySelector('.testimonials-slider');
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+
+        slider.addEventListener('mousedown', (e) => {
+            isDown = true;
+            startX = e.pageX - slider.offsetLeft;
+            scrollLeft = slider.scrollLeft;
+        });
+
+        slider.addEventListener('mouseleave', () => {
+            isDown = false;
+        });
+
+        slider.addEventListener('mouseup', () => {
+            isDown = false;
+        });
+
+        slider.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - slider.offsetLeft;
+            const walk = (x - startX) * 2;
+            slider.scrollLeft = scrollLeft - walk;
+        });
+    </script>
+</body>
+</html>
